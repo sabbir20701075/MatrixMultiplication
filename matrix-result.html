@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Matrix Result</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #121212;
+      color: #f1f1f1;
+      padding: 40px;
+      text-align: center;
+    }
+    h1 {
+      color: #ffffff;
+      margin-bottom: 30px;
+    }
+    table {
+      margin: 0 auto;
+      border-collapse: collapse;
+      font-size: 16px;
+    }
+    td {
+      border: 1px solid #444;
+      padding: 12px 18px;
+      text-align: center;
+      background-color: #1e1e1e;
+    }
+  </style>
+</head>
+<body>
+  <h1>Resulting Matrix</h1>
+  <div id="result"></div>
+
+  <script>
+    const matrixA = JSON.parse(localStorage.getItem("matrixA"));
+    const matrixB = JSON.parse(localStorage.getItem("matrixB"));
+
+    const rowsA = matrixA.length;
+    const colsA = matrixA[0].length;
+    const colsB = matrixB[0].length;
+
+    const result = [];
+
+    for (let i = 0; i < rowsA; i++) {
+      result[i] = [];
+      for (let j = 0; j < colsB; j++) {
+        let sum = 0;
+        for (let k = 0; k < colsA; k++) {
+          sum += matrixA[i][k] * matrixB[k][j];
+        }
+        result[i][j] = sum;
+      }
+    }
+
+    const table = document.createElement("table");
+    result.forEach(row => {
+      const tr = document.createElement("tr");
+      row.forEach(cell => {
+        const td = document.createElement("td");
+        td.innerText = cell;
+        tr.appendChild(td);
+      });
+      table.appendChild(tr);
+    });
+
+    document.getElementById("result").appendChild(table);
+  </script>
+</body>
+</html>
